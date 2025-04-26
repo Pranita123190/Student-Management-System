@@ -2,6 +2,7 @@ package com.StudentMangementSystem.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,14 +34,31 @@ public class ServiceImpl implements StudentService {
 
 	@Override
 	public Student saveStudent(Student student) {
+		 Student savedStudent = Studentrepository.save(student);
+
+		 System.out.println("Student saved successfully: " + savedStudent);
+		return savedStudent;
+
 		// TODO Auto-generated method stub
-		return Studentrepository.save(student);
+		//return Studentrepository.save(student);
 	}
 
 	@Override
 	public Student getById(int id) {
 		// TODO Auto-generated method stub
-		return Studentrepository.findById(id).get();
+		Optional<Student> optionalStudent=Studentrepository.findById(id);
+		
+			if(optionalStudent.isPresent()) {
+					Object s = optionalStudent.isPresent();
+					System.out.println("Student found:" + optionalStudent.get());
+					return optionalStudent.get();
+			}else {
+				System.out.println("Student not found");
+				return null;
+				
+			}
+		
+		//return Studentrepository.findById(id).get();
 	}
 
 	@Override
